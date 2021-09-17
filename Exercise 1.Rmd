@@ -1,0 +1,33 @@
+---
+title: "Exercise 1"
+author: "Matthew Kim"
+date: "9/17/2021"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+CV
+
+Matthew Kim
+
+mkim733@wisc.edu
+
+North Hall, University of Wisconsin, Madison
+
+https://polisci.wisc.edu
+
+matthewjkim98@gmail.com
+
+BA.Political Science. Rutgers University, New Brunswick
+
+Honors Scholar
+
+Current Fellow. University of Wisconsin, Madison
+
+Experience with in RStudio, Latex, and RStudio
