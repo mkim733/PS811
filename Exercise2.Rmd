@@ -1,0 +1,47 @@
+---
+name: Matthew 
+surname: Kim
+position: "Graduate Student"
+address: "North Hall"
+phone: +1 22 3333 4444
+www: polisci.wisc.edu
+email: "mkim733@iwsc.edu"
+date: "`r format(Sys.time(), '%B %Y')`"
+output: vitae::hyndman
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(vitae)
+```
+
+# Some stuff about me
+
+ * I am interested in Congress, political parties and party loyalty. 
+ 
+# Education
+
+```{r}
+library(tibble)
+tribble(
+  ~ Degree, ~ Year, ~ Institution, ~ Where,
+  "Bachelor of Arts", "2021", "Rutgers University", "New Brunswick, New Jersey"
+) %>% 
+  detailed_entries(Degree, Year, Institution, Where)
+```
+
+# Prizes
+
+```{r}
+tribble(
+  ~Year, ~Type, ~Desc,
+  2021, "Henry Rutgers Scholar", "Awarded for senior thesis on Senate moderates and regional divisons"
+) %>% 
+  brief_entries(
+    glue::glue("Prize in {Type}"),
+    Year, 
+    Desc
+  )
+```
+
+
