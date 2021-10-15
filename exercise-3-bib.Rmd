@@ -1,0 +1,239 @@
+---
+title             : "Exercise 3"
+shorttitle        : "APA Bibliography"
+
+author: 
+  - name          : "Matthew Kim"
+    corresponding : yes    # Define only one corresponding author
+    address       : "North Hall"
+    email         : "mkim733@wisc.edu"
+    
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : ["ref.bib"]
+
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("r-references.bib")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+
+# 821 Mass Political Behavior
+
+1) *Irrelevant events affect voters' evaluations of government performance*
+
+
+**Main Argument**
+
+The central theme of this reading is that non-political events, in close promixity to an election period, can influence electoral outcomes. 
+
+**Data**
+
+The support this argument, Healy et Al. utilize 3 data sets. The frist encompasses county election results for all major political races (presidential, gubernatorial, and Congressional) from 1964 to 2008. The second data set captures the results of college football games in close proximity to the election season, and the last data set focuses on the results from the NCAA 2009 Tournament (@healy2010, p.12805-12806).
+
+**Methods**
+
+Healy et Al. utilize a difference in means test, and a regression model to determine the effects of sporting events on voter behavior. They find statistically significant results and positive attitudes towards a candidate if a team won in a specific county (@healy2010, p.12806).
+
+
+**Conclusion**
+
+Healy et al. conclude that voters can distort positive feelings from sporting events to positive political feelings towards the president. More broadly, their research suggests that any non-political event that can seriously impact the mood of large numbers of voters can be influential on election day. They note however, that these effects are temporary and voters can shift moods once the effect wears off (@healy2010, p.12807)
+
+2) *Incumbency Advantage in U.S. Presidential Elections: The Historical Record*
+
+**Main Argument**
+
+The central themes of this reading is that we should be skeptical of the power of the incumbency advantage in relation to how voter's understand the actions of the presidency, and that presidential elections are more competitive than is often theorized.
+
+**Data**
+
+The support this argument, Mayhew analyzes the victories and defeats of presidential incumbents and presidential challengers for all presidential seats from the founding of our nation to the 2004 presidential election (@mayhew2008, p.206). 
+
+**Methods**
+
+In most instances, Mayhew analyzes the factors that contributed to a presidential victory, such as the candidate's strengths or voter attitudes that influence presidential outcomes. These include primarily, a simple probability estimation based on how many times a party won or lost the presidency. In addition, Mayhew lists the voter attitudes that can influence the election in an incumbent and open seat race (@mayhew2008, p.212).
+
+**Conclusion**
+
+The key conclusion that Mayhew finds is that the majority party in government has held the incumbecny in 66% of the presidential elections it has run for. However, in open seat elections, a complete analysis of America's presidential history reveals that both parties have an even channce (50%) of winning the presidency (@mayhew2008, p.226).
+
+
+3) *An Analysis of the Changing Social Bases of America's Political Parties: 1952-2008*
+
+
+**Main Argument**
+
+The main argument of this paper is that party coalitions have seen drastic and subtle shifts in demographic, economic, social, racial, and religious cleavages since 1952.
+
+**Data**
+
+The support this argument, Zingher analyzes the ANES database, specifically a file containing party loyalties for all election years since the ANES's inception (@zingher2014b, p.273). 
+
+**Methods**
+
+Zingher utilizes a logit regression model to determine shifts in political loyalties acros time, specifically how likely certain groups were and are to support the Republican or Democratic party in elections. He breaks these groups into a liberal/conservative dimension. Liberal groups are "Latinos", "Females", "Non-Religious", "Catholics", "Union Members", and "College Graduates". Conservative Groups are "Southern Whites", "Weekly Church Attendees", "Males", "Whites", and "Protestants" (@zingher2014b, p.273-274). 
+
+**Conclusion**
+
+There are several conclusions from Zingher's analysis. First is shifts in political loyalties among groups can attributed to three main factors, "conversion", "mobilization" and "demographic change". These factors are more influential for some groups than others. For example, Zingher finds that Democratic support among African Americans has increased over the past 60 years while union loyalty has been relatively stable. However, union membership has been shrinking as a share of the electorate, an issue that affects Republican as well. While "Southern Whites" are becoming more loyal to the Republican party, their share of the electorate is shrinking. Therefore, both parties will need to keep these shifts in mind moving forward (@zingher2014b, p.277, p.280). 
+
+
+
+4) *Selective Recruitment or Voter Neglect? Race, Place, and Voter Mobilization in 2016*
+
+
+**Main Argument**
+
+The main argument of this paper is that voting recruiters are racially biased in how they attempt to mobilize voters, and that certain groups, specifically minorities are often neglected in voter mobilization efforts in battleground states. 
+
+**Data**
+
+The support this argument, Ramirez, Romelia, and Wilcox-Archuleta utilizes a post election racial survey from the 2016 election to determine how mobilization differed between different racial groups (@ramirez2018, p.165).
+
+**Methods**
+
+The authors use a probability model to predict contact among rances, and they also utilize a logit regression model to predict how likely minority groups "Latinos", "African Americans", "Asian Americans", and low income Americane are to be contacted (@ramirez2018, p.165-166).
+
+**Conclusion**
+
+They find that both political parties are more likely to contact white voters in key battleground states. Minority mobilizes are more likely to contact minorities. However, since battleground states are majority white, both parties are neglecting large sections of the electorate who could benefit from voter contact (@ramirez2018, p.176, p.180)
+
+
+5) *Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment*
+
+**Main Argument**
+
+The main argument of this paper is that intense social pressure can increase voter turnout. 
+
+**Data**
+
+The support this argument, Gerber, Green, and Larimer target the households 180,002 in Michigan during the 2006 primary season (@gerber2008, p.36)
+
+**Methods**
+
+To test the strength of social pressure, the authors send out 4 mailings with different messages in order to test how households respond to them. One ballot told households that voting was a civic duty. The second ballot stated that a household was being studied. The third ballot provided the household with information on how each registered voter in the household voted, and fourth ballot adds information how their neighbors voted (@gerber2008, p.38)
+
+**Conclusion**
+
+They find that all of the mailings increased turnout. In addition, the last two ballots increased turnout by 4.9 and 8.1 percentage points respectively. This reinforces the impact of social pressure. However, the authors discuss the possibility of negative backlash and the short term effects of social pressure. Some respondents sent angry response letters, and once respondents have been exposed to the practice enough, it may lose its initial shock and mobilization value (@gerber2008, p.38-39). 
+
+# 826 The Legislative Process.
+
+6) *Insecure Majorities: Congress and the Perpetual Campaign*
+
+
+**Main Argument**
+
+The main argument for the first two chapters of this reading is that Congressional elections have become increasingly competitive post 1980. 
+
+**Data**
+
+This assertion is supported by a historical analysis of the political makeup of Congress pre-1980, interviews with members and staff pre-1980 and an analysis of voting records (@lee2016, p.21, p.32).
+
+**Methods**
+
+For the first two chapters of insecure majorities, Lee argues that Congressional elections pre-1980 were not competitive due a sustained period of Democratic party Congressional demoinance. Democrats never believed that their Congressional majority was in peril, and Republicans seemed consigned to their minority status. She cites interviews, newspaper articles, and statements from members of Congress and staffers to support this dichomoty. However, Republican Congressional victories in 1980 shifted the competitiveness of Congressional elections, and control for the chamber has been competitive ever since (@lee2016, p.34). 
+
+**Conclusion**
+
+For the first two chapters, Lee asserts that post-1980, neither party has had sustained control of the House and Senate for more than a few election cycles. This recent developments affects how both parties behave in Congress since control of the chamber is now always at stake every few years. This contrasts with Democratic dominance pre-1980 where control for the chamber seemed less significant (@lee2016, p.39-40).  
+
+
+7) *Congress Overwhelmed: The Decline in Congressional Capacity and Prospects for Reform*
+
+
+**Main Argument**
+
+The main argument in chapter 3 of this book is that spending cuts to Congressional staffs have weakened Congress's ability to process an increasingly heavy workload. 
+
+**Data**
+
+Reynolds supports her argument by utilizing appropriation data for Congressional offices since 1991 and by interviewing Congressional staffers (@lapira2021, p.36).
+
+**Methods**
+
+Reynolds analyzes the trends in appropriation data and finds that Congressional offices have been losing funding steadily since the 1990s. However, this trend has not offset the increasing workload among individual members, and some have expressed a desire for more staff to assist them in policy making and information processing (@lapira2021, p.39).
+
+**Conclusion**
+
+Reynolds concludes this chapter by reiterating the funding scarcity that affects individual legislators. However, Reynolds adds that this deficit has not affected the offices of Congressional party leadership who have increased in size since the 1990s. This move has placed an increased focus on Congressional party leadership on the legislative process rather than individual members (@lapira2021, p.49-50). 
+
+8) *Crossing Over: Majority Party Control Affects Legislator Behavior and the Agenda* 
+
+
+**Main Argument**
+
+The central idea of Napolio and Grose's article is that shifts in legislator preferences and the legislative agenda are dependent on the majority party's actions. 
+
+**Data**
+
+The authors support their argument by analyzing roll call vote data from 83rd Congress (@napolio2021, p.3)
+
+**Methods**
+
+The authors created "regimes" when a member of Congress died thus impacting control of the chamber. To analyze how this affected the chamber, the authors utilize a cut off point model that is similar to Krehbiel's pivitol politics model which determines where party's need to soften their stances to win the neccessary votes to pass legislation (@napolio2021, p.3-4).
+
+**Conclusion**
+
+The authors conclude that majority control does matter in relation to cut off points, and that deaths can suddenly shift the majority party's ability to legislate effectively (@napolio2021, p.6-7)
+
+9) *Understanding the Party Brand: Experimental Evidence on the Role of Valence* 
+
+
+**Main Argument**
+
+The central argument of Butler and Powell's article is that the party's reputation is equally important to the party's ideological positions in determining how voters perceive legislators and how legislators vote. 
+
+**Data**
+
+Butler and Powell study the behavior of state legislators for several reasons. First they are more open to study; second, they are close appromiximations of the national Congress, and almost half of state legislators end up serving in Congress (@butler2014a, p.493). 
+
+
+**Methods**
+
+Butler and Powell utilize a survey experiment to ask respondents how they judge the state party's performance based on certain ethical standards that are non-ideological (@butler2014a, p.496). 
+
+
+**Conclusion**
+
+Independent of party, Butler and Powell find that valence issues are important for voters who are more likely to support the party if it accomplishes its non-ideological tasks, i.e. passing the budget on time. State legislators know this and state party leaders will pressure their members to support positive valence issues in order to boost their standing among the the electorate (@butler2014a, p.503). 
+
+10) *Is Bipartisanship Dead?: Policy Agreement and Agenda-Setting in the House of Representatives*
+
+
+**Main Argument**
+
+The main ideas in chapters 4 and 5 of Harbridge's book is that bipartisanship is still present in forms that are less emphasized in the scholarly literature. 
+
+**Data**
+
+Harbridge supports her argument by extending Congressional voting research to voice votes which remain a mostly bipartisan process (@harbridge2015, p.68)
+
+**Methods**
+
+Harbridge tracks voice votes and other methods of bipartisanship that are not roll call related. Here, despite increases in Congressional partisan party leadership, bipartisanship still exists in committees, amendments, and voice votes (@harbridge2015, p.74). 
+
+
+**Conclusion**
+
+Although agenda setting has become increasingly partisan, bipartisanship is still present in the House through non-roll call methods (@harbridge2015, p.82-83). 
+
+\newpage
+
+
+# Works Cited
