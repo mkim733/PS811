@@ -1,0 +1,162 @@
+---
+title: 'Exercise 5: Functions and Loops'
+author: "Dillon Laaker"
+date: "11/5/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Thank you Veronica for assistance with some of the functions and with formulating the loops for part 2.
+
+# Functions
+
+1. Create a function for the mean, median, and standard deviation.
+
+
+```{r message=FALSE, warning=FALSE}
+
+national <- read.csv("national.csv")
+
+library(tidyverse)
+
+## Function for the mean ##
+
+M <- function(x) {
+  y <- (sum(x))/length(x)
+  return(y)
+  
+}
+
+## Function for the standard deviation ##
+
+SD <- function(x) {
+  y <- sqrt(sum((x - M(x))^2) / (length(x) - 1))
+  return(y)
+}
+
+## Function for the median ## 
+
+MD <- function(lst) {
+  a <- length(lst)
+  b <- sort(lst)
+  y <- ifelse(a%%2==1,b[(a+1)/2], M(b[n/2+0:1]))
+  return(y)
+}
+
+```
+
+2. Create a function that finds the mean and excludes the lowest and highest value.
+
+
+```{r message=FALSE, warning=FALSE}
+M_exclude <- function(x) {
+  x1 <- sort(x)
+  y1 <- x1[-c(1, length(x1))]
+  y2 <- M(x1)
+  return(y2)
+}
+
+```
+
+3. Apply the functions to the Christianity variables.
+
+
+```{r message=FALSE, warning=FALSE}
+## Mean ##
+
+M(national$christianity_protestant) 
+M(national$christianity_romancatholic)
+M(national$christianity_easternorthodox)
+M(national$christianity_anglican)
+M(national$christianity_other)
+M(national$christianity_all)
+
+## Standard Deviation ##
+
+
+SD(national$christianity_protestant) 
+SD(national$christianity_romancatholic)
+SD(national$christianity_easternorthodox)
+SD(national$christianity_anglican)
+SD(national$christianity_other)
+SD(national$christianity_all)
+
+## Median ## 
+
+
+MD(national$christianity_protestant) 
+MD(national$christianity_romancatholic)
+MD(national$christianity_easternorthodox)
+MD(national$christianity_anglican)
+MD(national$christianity_other)
+MD(national$christianity_all)
+
+## Mean that excludes values ##
+
+M_exclude(national$christianity_protestant) 
+M_exclude(national$christianity_romancatholic)
+M_exclude(national$christianity_easternorthodox)
+M_exclude(national$christianity_anglican)
+M_exclude(national$christianity_other)
+M_exclude(national$christianity_all)
+
+
+```
+
+4. Write a function that lists all the unique years with more than 300,000 Christians in total.
+
+
+```{r message=FALSE, warning=FALSE}
+
+unique_years <- function(C) {
+  y <- C %>% group_by(year, state) %>%
+  summarise(C1 = christianity_all > 300000) %>%
+  filter(C1 == T)
+ return(y)  
+}
+
+y3 <- unique_years(national)
+
+```
+
+# Loops/apply
+
+1. Write a loop to find how many variables there are per observation.
+
+```{r message=FALSE, warning=FALSE}
+
+LV <- rep(0, ncol(national))
+for (i in 1:length(national)) {
+  LV[i] <- ncol(national[i, ])
+}
+
+LV
+```
+
+2. Write a loop to find the mean number of Protestant Christians in each country (i.e., the state column). Then use an apply family function to do the same.
+
+
+```{r message=FALSE, warning=FALSE}
+
+MP <- data.frame(state = unique(national$state, prots = NA))
+                 
+for (i in 1:length(MP$state)) {
+  state1 <- MP[i,1]
+  y <- national %>% filter(state == state1) %>%
+    summarise(mean = mean(christianity_protestant, na.rm = TRUE)) %>%
+    pull(mean)
+  MP[i, 2] <- y
+  
+}
+```
+
+3. Check the column type for each variable.
+
+```{r message=FALSE, warning=FALSE}
+
+sapply(national, class)
+
+```
