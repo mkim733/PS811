@@ -1,0 +1,381 @@
+---
+title             : "Data Analysis Report"
+shorttitle        : "Data Analysis Report"
+
+author: 
+  - name          : "Matthew Kim"
+    affiliation   : 
+    corresponding : no    # Define only one corresponding author
+    address       : 
+    email         : 
+    role: 
+
+affiliation:
+  - id            : 
+    institution   : 
+  - id            : 
+    institution   : 
+
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : ["r-references2.bib"]
+
+floatsintext      : no
+indent            : false
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : no
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "doc"
+output            : papaja::apa6_pdf
+---
+
+\newpage
+
+```{r setup, include = FALSE}
+library(knitr)
+library(tidyverse)
+library("papaja")
+r_refs("r-references2.bib")
+```
+
+
+
+```{r analysis-preferences}
+# Seed for random number generation
+
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed, fig.pos = "h")
+```
+
+**Introduction**
+
+Environmental policies and the role of the federal government in society are polarizing topics in American politics. Liberals support environmental causes and favor policies that expand the federal government's role in society. Conservatives are less supportive of environmental causes, and favor policies that limit the federal government's role in society. However, these divisions have shifted in recent years. Pew Research Center polls show that voters are becoming more likely to support environmental policies and the government's role in addressing environmental issues @funk2019. Politically, both parties remain divided on the significance of environmental policies and the necessity of the government's intervention into environmental issues, but both parties are witnessing shifts within their core political demographics. These shifts support a retrospective analysis into how these attitudes have changed over time. 
+ 
+This paper seeks to conduct a preliminary exploration into how attitudes towards environmental policies and the federal government have shifted over time and whether there is a correlation between attitudes towards environmental policies, and attitudes towards the federal government. This paper explores two questions. "Has the public's attitudes towards environmental policies and trust towards the federal government changed over time?", and "Is there a correlation between attitudes towards environmental policies and attitudes towards the federal government?"
+ 
+This paper finds some attitude shifts within both groups towards environmental policies and trust attitudes towards the federal governnment. This paper also finds mixed evidence that shifts in attitudes towards environmental policies are correlated with shifts in trust levels towards the federal government for both ideological groups. These observations support studies that examine the political divide on evironmental issues @dunlap1976. They also suggest that there is no correlation between how voters view environmentalists and how they view the role of federal government in society. 
+
+
+**Theory and Hypotheses**
+
+Based on the Pew Research Center data, attitudes towards environmental policies and the government's role in society should change over time and be correlated with one another. In addition, if attitudes towards environmental policies are linked with attitudes towards the government's role in society, then different correlations should exist for voters in both ideological dimensions. This supports two hypotheses.
+
+H0: Average attitude levels towards environmental policies and the government's role in society have relatively remained stable over time. 
+
+H1: Average attitude levels towards environmental policies and the government's role in society have shifted significantly over time. 
+
+
+The second hypothesis utilizes a regression model to assess whether changes in attitudes towards environmental policies are linked with changes in attitude levels towards the federal government. 
+
+
+H0: There is no statistically significant correlation between changes in attitudes towards environmentalists and changes in attitudes towards the federal government over time.
+
+H1: There is a statistically significant correlation between changes in attitudes towards environmentalists and changes in attitudes towards the federal government over  time. 
+
+**Data and Methods**
+
+This paper utilizes the American National Election Time Series data set for all presidential and midterm election periods post 1947. 
+
+To assess the first hypothesis, the original data set was divided into two data sets containing voters who affiliate as liberal and voters who affiliate as conservative. These were coded on a 1 to 5 scale with 1 being the most liberal and 5 being the most conservative. Voters who affiliate as independent were removed from the data set. Each set was also modified to contain presidential and non-presidential election periods post 1980. The post 1980 political environment is cited as a turning point in American politics, when political competition increased between both parties @lee2016. This helps mitigate the likelihood that some liberals are Republicans and some conservatives are Democrats. To track support for environmental policies and attitudes towards the government, two variables were used that condense several questions. The "Thermometer-Environmentalists" variable, which acts as a measure for environmental policy attitudes, asks voters to rate environmentalists from 0 to 100 based on a feeling thermometer scale. The "Trust In Government" Index", also measured on a 1-100 scale combines several measures on the government's effectiveness. These questions were "Do You Trust The Federal Government To Do What Is Right", "Is The Federal Government Run By Few Interests Or For The Benefit Of All", and "How Much Does The Federal Government Waste Tax Money?" Once these variables were accounted for, a loop function calculated the mean level of support for environmentalist attitudes and the "Trust in Government Index" over time. 
+
+For the second hypothesis, several regression models were made for each ideological group. These models tracked changes in attitudes towards environmental policies ("Thermometer-Environmentalists"), with changes in attitudes towards the government ("Trust in Government Index"). In addition, for both hypotheses, since data points for the "Thermometer-Environmentalists" and "Trust in Government Index" variables data end in 2008, only a specific sub-set of election periods were utilized. These were the election results for 1980, 1988, 1990, 1992, 1994, 1996, 2000, 2002, 2004, and 2008.
+
+
+
+```{r message=FALSE, warning=FALSE}
+
+anes <- read.csv("anestotal.csv")
+
+anes1 <- subset(anes, VCF0004 >= 1980 & VCF0004 <= 2016 )
+
+dem <- subset(anes1, VCF0803 <= 3)
+
+dem1 <- subset(dem, VCF0229 <= 100 & VCF0656 < 999)
+
+reb <- subset(anes1, VCF0803 >= 5)
+
+reb1 <- subset(reb, VCF0229 <= 100 & VCF0656 < 999)
+
+```
+
+
+```{r message=FALSE, results = 'hide'}
+## finding the average support for environmentalist in each year post 1980 ##
+
+## Creating a loop that finds the mean level of support for environmentalists for each year and for each party in each year ##
+
+## Democrats ##
+
+## Vector for presidential years 1980, 1988, 1990, 1994, 1996, 2000, 2002, 2004, 2008 ## 
+
+y <- sort(unique(dem1$VCF0004))
+
+y
+
+year <- y[c(1:16)]
+
+year
+
+## Vector for mode support levels for years 1980, 1988, 1990, 1994, 1996, 2000, 2002, 2004, 2008 ## 
+
+o <- rep(NA, length(year))
+
+names(o) <- year
+
+o
+
+## Creating the loop ## 
+
+m <- mean(dem1$VCF0229[dem1$VCF0004 == 2000])
+
+m
+
+for(i  in 1:length(year)){
+  m1 <- mean(dem1$VCF0229[dem1$VCF0004 == year[i]])
+  o[i] <- m1
+}
+o
+
+## Republicans 
+
+
+y2 <- sort(unique(reb1$VCF0004))
+
+y2
+
+year2 <- y2[c(1:16)]
+
+year2
+
+## Vector for mode support levels for years 1980, 1988, 1990, 1994, 1996, 2000, 2002, 2004, 2008 ## 
+
+o1 <- rep(NA, length(year2))
+
+names(o1) <- year2
+
+o1
+
+## Creating the loop ## 
+
+m2 <- mean(reb1$VCF0229[reb1$VCF0004 == 2000])
+
+m2
+
+for(i  in 1:length(year2)){
+  m3 <- mean(reb1$VCF0229[reb1$VCF0004 == year2[i]])
+  o1[i] <- m3
+}
+o1
+
+
+## Creating a loop that finds the mean level of trust for government for each year and for each party in each year ##
+
+## Democrats ##
+
+## Vector for presidential years 1980, 1988, 1990, 1994, 1996, 2000, 2002, 2004, 2008 ## 
+
+y3 <- sort(unique(dem1$VCF0004))
+
+y3
+
+year3 <- y3[c(1:16)]
+
+year3
+
+## Vector for mode support levels for years 1980, 1988, 1990, 1994, 1996, 2000, 2002, 2004, 2008 ## 
+
+o4 <- rep(NA, length(year3))
+
+names(o4) <- year3
+
+o4
+
+## Creating the loop ## 
+
+m4 <- mean(dem1$VCF0656[dem1$VCF0004 == 2008])
+
+m4
+
+for(i  in 1:length(year3)){
+  m4 <- mean(dem1$VCF0656[dem1$VCF0004 == year[i]])
+  o4[i] <- m4
+}
+o4
+
+## Republicans 
+
+y4 <- sort(unique(reb1$VCF0004))
+
+y4
+
+year4 <- y[c(1:16)]
+
+year4
+
+## Vector for mode support levels for years 1980, 1988, 1990, 1994, 1996, 2000, 2002, 2004, 2008 ## 
+
+o5 <- rep(NA, length(year4))
+
+names(o5) <- year4
+
+o5
+
+## Creating the loop ## 
+
+m5 <- mean(reb1$VCF0656[reb1$VCF0004 == 2000])
+
+m5
+
+for(i  in 1:length(year4)){
+  m5 <- mean(reb1$VCF0656[reb1$VCF0004 == year4[i]])
+  o5[i] <- m5
+}
+o5
+```
+
+**Results**
+
+The results support some elements of both hypotheses. For the first hypotheses, the average attitude level for environmentalists (a proxy for measuring attitudes towards environmental policies), and the average level of trust for the government (a proxy for measuring attitudes towards the government) has some fluctuations. 
+
+```{r message=FALSE, results = 'hide'}
+
+
+
+demenviro <- data.frame(Year = c(1980, 1988, 1990, 1992, 1994, 1996, 2000, 2002, 2004, 2008),
+                        Environmentalist.Thermo = c(78.39667, 79.67101, 83.57057, 74.04752, 78.40647, 71.98020, 66.75231, 70.87742, 74.38498, 74.23333))
+
+```
+
+```{r message=FALSE, warning=FALSE}
+
+
+demenviroplot <- ggplot(demenviro, aes(x = Year, y = Environmentalist.Thermo)) +
+geom_path() +
+  geom_point(size = 0.5) +
+  ggtitle("Figure 1") +
+  xlim(1979, 2009) +
+  ylim(0, 90) +
+  xlab("Year") +
+  ylab("Thermometer Index") +
+  theme(legend.position="bottom")
+
+plot(demenviroplot)
+
+
+```
+
+
+```{r message = FALSE, echo = FALSE}
+
+
+rebenviro <- data.frame(Year = c(1980, 1988, 1990, 1992, 1994, 1996, 2000, 2002, 2004, 2008),
+                        Environmentalist.Thermo = c(74.39575, 75.73929, 76.28183, 66.72915, 67.35143, 60.93642, 61.43216, 58.91452, 62.83784, 64.63821))
+
+rebenviroplot <- ggplot(rebenviro, aes(x = Year, y = Environmentalist.Thermo)) +
+  geom_path() +
+  geom_point(size = 0.5) +
+  ggtitle("Figure 2") +
+  xlim(1979, 2009) +
+  ylim(0, 90) +
+  xlab("Year") +
+  ylab("Thermometer Index") +
+  theme(legend.position="bottom")
+
+plot(rebenviroplot)
+
+
+```
+
+\clearpage
+
+Between 1980 and 1990, liberal (Figure 1) and conservatives (Figure 2) had comparable attitude levels towards environmentalists. For both parties, out of a 100 points, the average attitude level for environmentalists was between 73 and 83 points. After 1990, both ideological groups diverge in their attitude levels. After 1990, conservative attitude levels for environmentalists drop below 73 points and hovers between 59 and 67 points until 2008. With the exception of 2002, liberal attitudes for environmentalists remain in the 70 point range until 2008. 
+
+There are minimal differences in attitudes towards the federal government for liberal and conservative voters. Beginning in 1980, trust in the federal government remains below 40 points for the duration of the election and non-election periods. There is a slight bump above 40 points during the 2002 midterm elections, but this likely attributed to a rally around the flag effect in the aftermath of the September 11th attacks @hetherington2003. What is also surprising is that in 2008, trust in the federal government for liberal voters was lower than conservative voters. Lower liberal trust in the federal government in 2008 may be linked with the fact that the presidency was still controlled by Republicans going into the 2008 presidential election. 
+
+
+```{r message = FALSE, echo = FALSE}
+
+demplot1 <- ggplot(dem1, aes(x = VCF0229, y = VCF0656, color = VCF0004)) +
+  geom_point() +
+  geom_abline(intercept = 32.27585, slope = -0.00622, linetype  = "solid", colour = "black", size = 1) +
+  ggtitle("Figure 3") +
+  xlim(0, 110) +
+  ylim(0, 110) +
+  xlab("Enviromentalist Thermometer") +
+  ylab("Trust In Government Index") +
+  theme(legend.position="bottom")
+ggsave("demplot1.pdf", width = 10, height = 10)
+
+plot(demplot1)
+
+```
+
+```{r, echo = FALSE, results='asis'}
+
+demplot <- lm(VCF0656 ~ VCF0229, dem1)
+
+d <- summary(demplot)
+
+kable(d$coefficients)
+
+```
+
+
+```{r message = FALSE, echo = FALSE}
+
+rebplot1 <- ggplot(reb1, aes(x = VCF0229, y = VCF0656, color = VCF0004)) +
+  geom_point() +
+  geom_abline(intercept = 27.02142, slope = 0.05740, linetype  = "solid", colour = "black", size = 1) +
+  ggtitle("Figure 4") +
+  xlim(0, 110) +
+  ylim(0, 110) +
+  xlab("Enviromentalist Thermometer") +
+  ylab("Trust In Government Index") +
+  theme(legend.position="bottom")
+ggsave("rebplot1.pdf", width = 10, height = 10)
+
+plot(rebplot1)
+
+
+```
+
+```{r, echo = FALSE, results='asis'}
+
+
+rebplot <- lm(VCF0656 ~ VCF0229, reb1)
+
+r <- summary(rebplot)
+
+kable(r$coefficients)
+
+
+
+```
+
+Correlations between the two variables for the selected years yields mixed results. For liberal voters (Figure 3), there is not a statistically significant relationship between changes in attitudes towards environmentalists and changes in trust levels for the federal government. 
+
+For conservative voters (Figure 4), the relationship is statistically significant, but the rate of change is low, and the scatterplot does not provide an obvious visual correlation between the two variables. This suggests that further work is needed to locate variables that can better capture attitudes towards environmental issues and trust in federal government policies. One of the major limitations of the ANES codebook is that many variables are coded as ordinal measures. This presents a challenge when conducting a regression model that is reliant on continuous variables. In addition, the absence of these variables (Thermometer-Environmentalists) and (Trust in Government Index) for the 2012, 2016, and 2020 presidential election limits the external validity of these regression models. The minimal correlations between these two variables suggest that liberal and conservative voters view attitudes towards environmentalists, environmental policies, and trust towards the federal government's capabilities as separate and independent affairs. 
+
+\clearpage
+
+**Conclusion**
+
+Tacking enviromental concerns will require a collective effort and decisive government intervenion. However, divergent views between both ideological groups may threaten these goals. This paper sought to explore how these views have shifted over time, and whether correlations exist between both variables for liberal and conservative voters. Conservatives have become less supportive of environmental policies (measured by attitudes towards environmentalists), and liberals have remained consistently more supportive of environmental policies since 1980. However, further work is needed to understand low levels of trust towards the government in both ideological groups and the lack of significant correlations between the two groups. How do liberals and conservatives define environmentalism and the government's role in environmental policies? Do voters link environmentalism with environmental policies?" Do voters consistently separate these ideas? How have these attitudes changed in recent presidential years where support for environmental protections and more federal interventions into economic and social issues is increasing? A future study with more cohesive data is needed to understand why a growing share of the electorate is supportive of enviromental protections but less supportive of the government's role in society. 
+
+\clearpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{0.0in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup
